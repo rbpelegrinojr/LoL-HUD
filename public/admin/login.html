@@ -12,25 +12,23 @@
       <div class="row justify-content-center align-items-center min-vh-100">
         <div class="col-12 col-md-8 col-lg-5">
           <section class="glass-panel p-4 p-lg-5">
-            <span class="eyebrow">Milestone 1</span>
+            <span class="eyebrow">Admin Login</span>
             <h1 class="display-6 fw-bold mb-3">Tournament Admin Login</h1>
             <p class="text-secondary mb-4">
-              Initial Bootstrap-powered entry screen for local/LAN tournament operations.
+              Sign in to manage tournaments, teams, players, matches, and live broadcast overlays.
             </p>
+            <div id="login-error" class="alert alert-danger d-none" role="alert"></div>
             <form id="login-form" class="needs-validation" novalidate>
               <div class="mb-3">
-                <label class="form-label" for="email">Email or username</label>
-                <input class="form-control form-control-lg" id="email" name="email" type="text" required />
+                <label class="form-label" for="username">Username</label>
+                <input class="form-control form-control-lg" id="username" name="username" type="text" autocomplete="username" required />
               </div>
               <div class="mb-4">
                 <label class="form-label" for="password">Password</label>
-                <input class="form-control form-control-lg" id="password" name="password" type="password" required />
+                <input class="form-control form-control-lg" id="password" name="password" type="password" autocomplete="current-password" required />
               </div>
-              <button class="btn btn-primary btn-lg w-100" type="submit">Open Dashboard Preview</button>
+              <button class="btn btn-primary btn-lg w-100" type="submit">Sign In</button>
             </form>
-            <p class="small text-secondary mt-4 mb-0">
-              Authentication, JWT, and role-based access will be implemented in Milestone 2.
-            </p>
           </section>
         </div>
       </div>

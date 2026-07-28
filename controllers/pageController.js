@@ -29,5 +29,10 @@ module.exports = {
   healthCheck,
   runtimeStatus,
   loginPage: sendPage(path.join('admin', 'login.html')),
-  dashboardPage: sendPage(path.join('admin', 'dashboard.html'))
+  dashboardPage: sendPage(path.join('admin', 'dashboard.html')),
+  tournamentsPage: sendPage(path.join('admin', 'tournaments.html')),
+  teamsPage: sendPage(path.join('admin', 'teams.html')),
+  playersPage: sendPage(path.join('admin', 'players.html')),
+  matchesPage: sendPage(path.join('admin', 'matches.html')),
+  broadcastPage: sendPage(path.join('admin', 'broadcast.html'))
 };
