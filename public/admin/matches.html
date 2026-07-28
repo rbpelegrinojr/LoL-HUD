@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Matches | League of Legends Tournament HUD</title>
+    <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/admin.css" />
+  </head>
+  <body class="admin-shell">
+    <div class="container-fluid">
+      <div class="row min-vh-100">
+        <aside class="col-12 col-lg-3 col-xxl-2 sidebar p-4">
+          <div>
+            <span class="eyebrow">League of Legends Tournament HUD</span>
+            <h1 class="h3 mt-2 mb-4">Admin Dashboard</h1>
+          </div>
+          <nav class="nav flex-column gap-2">
+            <a class="nav-link" href="/admin/dashboard">Overview</a>
+            <a class="nav-link" href="/admin/tournaments">Tournaments</a>
+            <a class="nav-link" href="/admin/teams">Teams</a>
+            <a class="nav-link" href="/admin/players">Players</a>
+            <a class="nav-link active" href="/admin/matches">Matches</a>
+            <a class="nav-link" href="/admin/broadcast">Broadcast</a>
+            <a class="nav-link" href="/admin/logout">Logout</a>
+          </nav>
+        </aside>
+        <main class="col-12 col-lg-9 col-xxl-10 p-4 p-lg-5 content-area">
+          <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+            <div>
+              <span class="eyebrow">Manage</span>
+              <h2 class="mb-1">Matches</h2>
+              <p class="text-secondary mb-0">Schedule series between teams within a tournament.</p>
+            </div>
+            <button class="btn btn-primary" type="button" id="create-btn" data-bs-toggle="modal" data-bs-target="#match-modal">
+              New Match
+            </button>
+          </div>
+
+          <article class="glass-panel p-4">
+            <div id="empty-state" class="text-center text-secondary py-5 d-none">
+              <p class="mb-0">No matches yet. Schedule your first match to get started.</p>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-dark table-hover align-middle mb-0" id="matches-table">
+                <thead>
+                  <tr>
+                    <th>Tournament</th>
+                    <th>Team 1</th>
+                    <th>Team 2</th>
+                    <th>Format</th>
+                    <th>Score</th>
+                    <th>Status</th>
+                    <th class="text-end">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="matches-body"></tbody>
+              </table>
+            </div>
+          </article>
+        </main>
+      </div>
+    </div>
+
+    <div class="modal fade" id="match-modal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content bg-dark">
+          <form id="match-form">
+            <div class="modal-header border-secondary">
+              <h5 class="modal-title" id="modal-title">New Match</h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <input type="hidden" id="match-id" name="id" />
+              <div class="mb-3">
+                <label class="form-label" for="tournament_id">Tournament</label>
+                <select class="form-select" id="tournament_id" name="tournament_id" required></select>
+              </div>
+              <div class="row">
+                <div class="col-6 mb-3">
+                  <label class="form-label" for="team1_id">Team 1</label>
+                  <select class="form-select" id="team1_id" name="team1_id" required></select>
+                </div>
+                <div class="col-6 mb-3">
+                  <label class="form-label" for="team2_id">Team 2</label>
+                  <select class="form-select" id="team2_id" name="team2_id" required></select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6 mb-3">
+                  <label class="form-label" for="format">Format</label>
+                  <select class="form-select" id="format" name="format">
+                    <option value="bo1">Bo1</option>
+                    <option value="bo3" selected>Bo3</option>
+                    <option value="bo5">Bo5</option>
+                  </select>
+                </div>
+                <div class="col-6 mb-3">
+                  <label class="form-label" for="status">Status</label>
+                  <select class="form-select" id="status" name="status">
+                    <option value="pending">Pending</option>
+                    <option value="ongoing">Ongoing</option>
+                    <option value="completed">Completed</option>
+                  </select>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="stage">Stage</label>
+                <input class="form-control" id="stage" name="stage" placeholder="e.g. Grand Final" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="scheduled_at">Scheduled At</label>
+                <input class="form-control" id="scheduled_at" name="scheduled_at" type="datetime-local" />
+              </div>
+            </div>
+            <div class="modal-footer border-secondary">
+              <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary">Save Match</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/apiClient.js"></script>
+    <script src="/js/matches.js"></script>
+  </body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tournaments | League of Legends Tournament HUD</title>
+    <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/admin.css" />
+  </head>
+  <body class="admin-shell">
+    <div class="container-fluid">
+      <div class="row min-vh-100">
+        <aside class="col-12 col-lg-3 col-xxl-2 sidebar p-4">
+          <div>
+            <span class="eyebrow">League of Legends Tournament HUD</span>
+            <h1 class="h3 mt-2 mb-4">Admin Dashboard</h1>
+          </div>
+          <nav class="nav flex-column gap-2">
+            <a class="nav-link" href="/admin/dashboard">Overview</a>
+            <a class="nav-link active" href="/admin/tournaments">Tournaments</a>
+            <a class="nav-link" href="/admin/teams">Teams</a>
+            <a class="nav-link" href="/admin/players">Players</a>
+            <a class="nav-link" href="/admin/matches">Matches</a>
+            <a class="nav-link" href="/admin/broadcast">Broadcast</a>
+            <a class="nav-link" href="/admin/logout">Logout</a>
+          </nav>
+        </aside>
+        <main class="col-12 col-lg-9 col-xxl-10 p-4 p-lg-5 content-area">
+          <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+            <div>
+              <span class="eyebrow">Manage</span>
+              <h2 class="mb-1">Tournaments</h2>
+              <p class="text-secondary mb-0">Create and manage tournament events.</p>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+              <span class="status-pill" id="ongoing-count">0 ongoing</span>
+              <button class="btn btn-primary" type="button" id="create-btn" data-bs-toggle="modal" data-bs-target="#tournament-modal">
+                New Tournament
+              </button>
+            </div>
+          </div>
+
+          <article class="glass-panel p-4">
+            <div id="empty-state" class="text-center text-secondary py-5 d-none">
+              <p class="mb-0">No tournaments yet. Create your first tournament to get started.</p>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-dark table-hover align-middle mb-0" id="tournaments-table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Short Name</th>
+                    <th>Format</th>
+                    <th>Status</th>
+                    <th>Start Date</th>
+                    <th class="text-end">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="tournaments-body"></tbody>
+              </table>
+            </div>
+          </article>
+        </main>
+      </div>
+    </div>
+
+    <div class="modal fade" id="tournament-modal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content bg-dark">
+          <form id="tournament-form" enctype="multipart/form-data">
+            <div class="modal-header border-secondary">
+              <h5 class="modal-title" id="modal-title">New Tournament</h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <input type="hidden" id="tournament-id" name="id" />
+              <div class="mb-3">
+                <label class="form-label" for="name">Name</label>
+                <input class="form-control" id="name" name="name" required />
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="short_name">Short Name</label>
+                <input class="form-control" id="short_name" name="short_name" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="format">Format</label>
+                <input class="form-control" id="format" name="format" placeholder="e.g. Double Elimination" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="status">Status</label>
+                <select class="form-select" id="status" name="status">
+                  <option value="upcoming">Upcoming</option>
+                  <option value="ongoing">Ongoing</option>
+                  <option value="completed">Completed</option>
+                </select>
+              </div>
+              <div class="row">
+                <div class="col-6 mb-3">
+                  <label class="form-label" for="start_date">Start Date</label>
+                  <input class="form-control" id="start_date" name="start_date" type="date" />
+                </div>
+                <div class="col-6 mb-3">
+                  <label class="form-label" for="end_date">End Date</label>
+                  <input class="form-control" id="end_date" name="end_date" type="date" />
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="logo">Logo</label>
+                <input class="form-control" id="logo" name="logo" type="file" accept="image/*" />
+              </div>
+            </div>
+            <div class="modal-footer border-secondary">
+              <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary">Save Tournament</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/apiClient.js"></script>
+    <script src="/js/tournaments.js"></script>
+  </body>
+</html>

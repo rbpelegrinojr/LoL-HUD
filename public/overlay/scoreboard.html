@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Scoreboard Overlay</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 1920px;
+        height: 1080px;
+        background: transparent;
+        font-family: 'Segoe UI', Arial, sans-serif;
+        overflow: hidden;
+      }
+
+      #scoreboard {
+        position: absolute;
+        top: 24px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        align-items: center;
+        gap: 24px;
+        background: rgba(5, 8, 22, 0.82);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 16px;
+        padding: 14px 32px;
+        color: #f8f9ff;
+      }
+
+      .team {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-width: 220px;
+      }
+
+      .team.red {
+        flex-direction: row-reverse;
+        text-align: right;
+      }
+
+      .team-name {
+        font-size: 28px;
+        font-weight: 700;
+      }
+
+      .team-kills {
+        font-size: 36px;
+        font-weight: 800;
+      }
+
+      .team.blue .team-name,
+      .team.blue .team-kills {
+        color: #5c9bff;
+      }
+
+      .team.red .team-name,
+      .team.red .team-kills {
+        color: #ff5c5c;
+      }
+
+      .center {
+        text-align: center;
+        min-width: 140px;
+      }
+
+      #gold-diff {
+        font-size: 20px;
+        font-weight: 700;
+        color: #f6c945;
+      }
+
+      #timer {
+        font-size: 18px;
+        color: #aab4d6;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="scoreboard">
+      <div class="team blue">
+        <span class="team-name" id="blue-name">BLUE</span>
+        <span class="team-kills" id="blue-kills">0</span>
+      </div>
+      <div class="center">
+        <div id="gold-diff">GOLD EVEN</div>
+        <div id="timer">00:00</div>
+      </div>
+      <div class="team red">
+        <span class="team-name" id="red-name">RED</span>
+        <span class="team-kills" id="red-kills">0</span>
+      </div>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/overlay-scoreboard.js"></script>
+  </body>
+</html>
