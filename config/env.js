@@ -16,11 +16,7 @@ module.exports = {
   nodeEnv: process.env.NODE_ENV || 'development',
   port: Number.parseInt(process.env.PORT || '3000', 10),
   database: {
-    host: process.env.DB_HOST || '127.0.0.1',
-    port: Number.parseInt(process.env.DB_PORT || '3306', 10),
-    name: process.env.DB_NAME || 'lol_hud',
-    user: process.env.DB_USER || 'root',
-    password: process.env.DB_PASSWORD || '',
-    connectOnStartup: parseBoolean(process.env.DB_CONNECT_ON_STARTUP, false)
+    path: process.env.DB_PATH || path.join(__dirname, '..', 'data', 'lol_hud.db'),
+    syncOnStartup: parseBoolean(process.env.DB_SYNC_ON_STARTUP, true)
   }
 };

@@ -1,6 +1,6 @@
 # League of Legends Tournament HUD
 
-A production-oriented starter for a school and university **League of Legends Tournament HUD and Management System**. This Milestone 1 delivery initializes the project structure, Express server, Sequelize/MySQL configuration, Socket.IO wiring, Bootstrap-based admin UI, and setup documentation.
+A production-oriented starter for a school and university **League of Legends Tournament HUD and Management System**. This Milestone 1 delivery initializes the project structure, Express server, Sequelize/SQLite configuration, Socket.IO wiring, Bootstrap-based admin UI, and setup documentation.
 
 ## Milestone 1 Scope
 
@@ -42,7 +42,6 @@ A production-oriented starter for a school and university **League of Legends To
 
 - Node.js 22 LTS or newer
 - npm
-- MySQL 8
 
 ## Installation
 
@@ -55,8 +54,7 @@ A production-oriented starter for a school and university **League of Legends To
    ```bash
    cp .env.example .env
    ```
-4. Update the MySQL credentials in `.env`.
-5. Start the development server:
+4. Start the development server:
    ```bash
    npm run dev
    ```
@@ -68,12 +66,8 @@ A production-oriented starter for a school and university **League of Legends To
 | `NODE_ENV` | Application environment |
 | `PORT` | HTTP server port |
 | `APP_NAME` | Display name used by the server |
-| `DB_HOST` | MySQL host |
-| `DB_PORT` | MySQL port |
-| `DB_NAME` | Database name |
-| `DB_USER` | Database user |
-| `DB_PASSWORD` | Database password |
-| `DB_CONNECT_ON_STARTUP` | Set to `true` to verify MySQL during boot |
+| `DB_PATH` | Path to the SQLite database file (default: `./data/lol_hud.db`) |
+| `DB_SYNC_ON_STARTUP` | Set to `false` to skip automatic table creation on boot |
 
 ## Development Mode
 
@@ -114,6 +108,6 @@ See [`docs/INSTALLATION.md`](docs/INSTALLATION.md) for Windows 11 and Ubuntu 24.
 
 ## Troubleshooting
 
-- If MySQL is not ready yet, keep `DB_CONNECT_ON_STARTUP=false` so the UI can still boot while you finish setup.
+- If the database file is missing, it is created automatically in the `data/` folder when the server starts.
 - If port `3000` is busy, change `PORT` in `.env`.
 - If styles do not load, confirm `npm install` completed successfully so Bootstrap assets exist in `node_modules`.
