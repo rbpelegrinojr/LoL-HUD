@@ -3,12 +3,13 @@ const pageController = require('../controllers/pageController');
 const authController = require('../controllers/authController');
 const { adminViewLimiter, loginLimiter } = require('../middleware/rateLimiter');
 const requireAuth = require('../middleware/authMiddleware');
+const { doubleCsrfProtection } = require('../middleware/csrf');
 
 const router = express.Router();
 
 router.use(adminViewLimiter);
 router.get('/login', pageController.loginPage);
-router.post('/login', loginLimiter, authController.postLogin);
+router.post('/login', loginLimiter, doubleCsrfProtection, authController.postLogin);
 router.get('/logout', authController.postLogout);
 router.get('/dashboard', requireAuth, pageController.dashboardPage);
 router.get('/tournaments', requireAuth, pageController.tournamentsPage);

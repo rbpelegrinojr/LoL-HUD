@@ -23,8 +23,16 @@ async function closeServer(httpServer) {
 }
 
 function extractCookie(response) {
-  const setCookie = response.headers.get('set-cookie');
-  return setCookie ? setCookie.split(';')[0] : null;
+  const setCookie = response.headers.getSetCookie ? response.headers.getSetCookie() : [response.headers.get('set-cookie')];
+  return setCookie.filter(Boolean).map((cookie) => cookie.split(';')[0]);
+}
+
+async function fetchLoginForm(baseUrl) {
+  const response = await fetch(`${baseUrl}/admin/login`);
+  const html = await response.text();
+  const match = html.match(/<meta name="csrf-token" content="([^"]+)"/);
+  const cookies = extractCookie(response);
+  return { csrfToken: match ? match[1] : null, cookie: cookies.join('; ') };
 }
 
 let sharedServer;
@@ -42,9 +50,10 @@ test.after(async () => {
 });
 
 test('POST /admin/login succeeds with valid credentials and sets a session cookie', async () => {
+  const { csrfToken, cookie } = await fetchLoginForm(sharedBaseUrl);
   const response = await fetch(`${sharedBaseUrl}/admin/login`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', 'x-csrf-token': csrfToken, cookie },
     body: JSON.stringify({ username: 'admin', password: 'changeme123' })
   });
   const body = await response.json();
@@ -52,20 +61,32 @@ test('POST /admin/login succeeds with valid credentials and sets a session cooki
   assert.equal(response.status, 200);
   assert.equal(body.redirect, '/admin/dashboard');
 
-  sessionCookie = extractCookie(response);
+  const cookies = extractCookie(response);
+  sessionCookie = cookies.find((value) => value.startsWith('lol-hud.sid=')) || cookies[0];
   assert.ok(sessionCookie);
 });
 
 test('POST /admin/login fails with invalid credentials', async () => {
+  const { csrfToken, cookie } = await fetchLoginForm(sharedBaseUrl);
   const response = await fetch(`${sharedBaseUrl}/admin/login`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', 'x-csrf-token': csrfToken, cookie },
     body: JSON.stringify({ username: 'admin', password: 'wrong-password' })
   });
   const body = await response.json();
 
   assert.equal(response.status, 401);
   assert.equal(body.message, 'Invalid credentials');
+});
+
+test('POST /admin/login without a CSRF token is rejected', async () => {
+  const response = await fetch(`${sharedBaseUrl}/admin/login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username: 'admin', password: 'changeme123' })
+  });
+
+  assert.equal(response.status, 403);
 });
 
 test('GET /admin/dashboard redirects to login without a session', async () => {
@@ -82,21 +103,25 @@ test('GET /admin/dashboard succeeds with a valid session cookie', async () => {
 });
 
 test('POST /admin/login is rate limited after repeated failed attempts', async () => {
-  // Two prior POST /admin/login requests (valid + invalid) already counted
-  // towards the limiter above; three more keep us at the limit boundary.
-  for (let attempt = 0; attempt < 3; attempt += 1) {
+  // Three prior POST /admin/login requests (valid + invalid + missing csrf)
+  // already counted towards the limiter above; two more keep us at the limit
+  // boundary before the 6th request trips the 429 response.
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    // eslint-disable-next-line no-await-in-loop
+    const { csrfToken, cookie } = await fetchLoginForm(sharedBaseUrl);
     // eslint-disable-next-line no-await-in-loop
     const response = await fetch(`${sharedBaseUrl}/admin/login`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'x-csrf-token': csrfToken, cookie },
       body: JSON.stringify({ username: 'admin', password: 'wrong-password' })
     });
     assert.equal(response.status, 401);
   }
 
+  const { csrfToken, cookie } = await fetchLoginForm(sharedBaseUrl);
   const limitedResponse = await fetch(`${sharedBaseUrl}/admin/login`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', 'x-csrf-token': csrfToken, cookie },
     body: JSON.stringify({ username: 'admin', password: 'wrong-password' })
   });
 

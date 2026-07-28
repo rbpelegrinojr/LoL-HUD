@@ -20,10 +20,16 @@ if (loginForm) {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
+    const csrfMeta = document.querySelector('meta[name="csrf-token"]');
+    const csrfToken = csrfMeta ? csrfMeta.getAttribute('content') : '';
+
     try {
       const response = await fetch('/admin/login', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'x-csrf-token': csrfToken
+        },
         credentials: 'same-origin',
         body: JSON.stringify({ username, password })
       });

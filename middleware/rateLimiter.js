@@ -33,8 +33,19 @@ const apiLimiter = rateLimit({
   }
 });
 
+const overlayLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  limit: 120,
+  standardHeaders: 'draft-8',
+  legacyHeaders: false,
+  message: {
+    message: 'Too many overlay requests. Please try again in a minute.'
+  }
+});
+
 module.exports = {
   adminViewLimiter,
   loginLimiter,
-  apiLimiter
+  apiLimiter,
+  overlayLimiter
 };

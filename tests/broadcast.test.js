@@ -30,12 +30,26 @@ test.before(async () => {
   await new Promise((resolve) => httpServer.listen(0, resolve));
   baseUrl = `http://127.0.0.1:${httpServer.address().port}`;
 
+  const loginFormResponse = await fetch(`${baseUrl}/admin/login`);
+  const loginFormHtml = await loginFormResponse.text();
+  const loginCsrfMatch = loginFormHtml.match(/<meta name="csrf-token" content="([^"]+)"/);
+  const loginFormCookies = (loginFormResponse.headers.getSetCookie ? loginFormResponse.headers.getSetCookie() : [loginFormResponse.headers.get('set-cookie')])
+    .filter(Boolean)
+    .map((value) => value.split(';')[0]);
+
   const loginResponse = await fetch(`${baseUrl}/admin/login`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      cookie: loginFormCookies.join('; '),
+      'x-csrf-token': loginCsrfMatch ? loginCsrfMatch[1] : ''
+    },
     body: JSON.stringify({ username: 'admin', password: 'changeme123' })
   });
-  cookie = loginResponse.headers.get('set-cookie').split(';')[0];
+  const loginCookies = (loginResponse.headers.getSetCookie ? loginResponse.headers.getSetCookie() : [loginResponse.headers.get('set-cookie')])
+    .filter(Boolean)
+    .map((value) => value.split(';')[0]);
+  cookie = loginCookies.find((value) => value.startsWith('lol-hud.sid=')) || loginCookies[0];
 
   const csrfResponse = await fetch(`${baseUrl}/api/csrf-token`, { headers: { cookie } });
   const csrfSetCookie = csrfResponse.headers.get('set-cookie');
