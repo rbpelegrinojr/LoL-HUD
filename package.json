@@ -1,0 +1,46 @@
+{
+  "name": "lol-hud",
+  "version": "1.0.0",
+  "description": "League of Legends Tournament HUD and management system for school and university esports broadcasts.",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon app.js",
+    "start": "node app.js",
+    "test": "node --test"
+  },
+  "keywords": [
+    "league-of-legends",
+    "esports",
+    "obs",
+    "express",
+    "socket-io"
+  ],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=22"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rbpelegrinojr/LoL-HUD.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rbpelegrinojr/LoL-HUD/issues"
+  },
+  "homepage": "https://github.com/rbpelegrinojr/LoL-HUD#readme",
+  "dependencies": {
+    "bootstrap": "^5.3.8",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.6.0",
+    "helmet": "^8.3.0",
+    "morgan": "^1.11.0",
+    "mysql2": "^3.23.2",
+    "sequelize": "^6.37.8",
+    "socket.io": "^4.8.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard | League of Legends Tournament HUD</title>
+    <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/admin.css" />
+  </head>
+  <body class="admin-shell">
+    <div class="container-fluid">
+      <div class="row min-vh-100">
+        <aside class="col-12 col-lg-3 col-xxl-2 sidebar p-4">
+          <div>
+            <span class="eyebrow">League of Legends Tournament HUD</span>
+            <h1 class="h3 mt-2 mb-4">Admin Dashboard</h1>
+          </div>
+          <nav class="nav flex-column gap-2">
+            <a class="nav-link active" href="#overview">Overview</a>
+            <a class="nav-link" href="#operations">Operations</a>
+            <a class="nav-link" href="#broadcast">Broadcast</a>
+            <a class="nav-link" href="/admin/login">Back to Login</a>
+          </nav>
+        </aside>
+        <main class="col-12 col-lg-9 col-xxl-10 p-4 p-lg-5 content-area">
+          <section id="overview" class="mb-5">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+              <div>
+                <span class="eyebrow">Milestone 1</span>
+                <h2 class="mb-1">Project Initialization Status</h2>
+                <p class="text-secondary mb-0">Express, Sequelize, MySQL config, Socket.IO, and Bootstrap are connected.</p>
+              </div>
+              <span class="status-pill" id="socket-status">Socket: waiting</span>
+            </div>
+            <div class="row g-4">
+              <div class="col-12 col-md-6 col-xl-3">
+                <article class="metric-card">
+                  <span class="metric-label">Environment</span>
+                  <strong class="metric-value" id="environment">Loading...</strong>
+                </article>
+              </div>
+              <div class="col-12 col-md-6 col-xl-3">
+                <article class="metric-card">
+                  <span class="metric-label">Database</span>
+                  <strong class="metric-value" id="database-status">Loading...</strong>
+                </article>
+              </div>
+              <div class="col-12 col-md-6 col-xl-3">
+                <article class="metric-card">
+                  <span class="metric-label">Connected Clients</span>
+                  <strong class="metric-value" id="connected-clients">0</strong>
+                </article>
+              </div>
+              <div class="col-12 col-md-6 col-xl-3">
+                <article class="metric-card">
+                  <span class="metric-label">Started At</span>
+                  <strong class="metric-value small-value" id="started-at">Loading...</strong>
+                </article>
+              </div>
+            </div>
+          </section>
+
+          <section id="operations" class="mb-5">
+            <div class="row g-4">
+              <div class="col-12 col-xl-6">
+                <article class="glass-panel h-100 p-4">
+                  <h3 class="h5 mb-3">Milestone 1 Deliverables</h3>
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item">MVC-based Express application bootstrap</li>
+                    <li class="list-group-item">Sequelize + MySQL configuration layer</li>
+                    <li class="list-group-item">Socket.IO server ready for overlay updates</li>
+                    <li class="list-group-item">Bootstrap login screen and dashboard layout</li>
+                    <li class="list-group-item">Environment template and installation documentation</li>
+                  </ul>
+                </article>
+              </div>
+              <div class="col-12 col-xl-6">
+                <article class="glass-panel h-100 p-4">
+                  <h3 class="h5 mb-3">Next Milestone Preview</h3>
+                  <p class="text-secondary mb-2">Authentication work intentionally starts in Milestone 2.</p>
+                  <ul class="mb-0 text-secondary">
+                    <li>User model and password hashing</li>
+                    <li>JWT-based session flow</li>
+                    <li>Role-aware route protection</li>
+                  </ul>
+                </article>
+              </div>
+            </div>
+          </section>
+
+          <section id="broadcast">
+            <article class="glass-panel p-4">
+              <h3 class="h5 mb-3">Broadcast Readiness Notes</h3>
+              <p class="text-secondary mb-0">
+                Socket.IO is active and the admin shell is ready for real-time tournament state broadcasting to OBS browser sources in later milestones.
+              </p>
+            </article>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/dashboard.js"></script>
+  </body>
+</html>

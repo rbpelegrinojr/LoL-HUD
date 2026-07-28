@@ -1,0 +1,123 @@
+:root {
+  color-scheme: dark;
+  --bg-primary: #050816;
+  --bg-secondary: #0c1330;
+  --panel-border: rgba(255, 255, 255, 0.08);
+  --text-primary: #f8f9ff;
+  --text-secondary: #aab4d6;
+  --accent: #5c7cfa;
+  --accent-soft: rgba(92, 124, 250, 0.18);
+}
+
+body.admin-shell {
+  margin: 0;
+  background:
+    radial-gradient(circle at top, rgba(92, 124, 250, 0.18), transparent 30%),
+    linear-gradient(135deg, var(--bg-primary), var(--bg-secondary));
+  color: var(--text-primary);
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.min-vh-100 {
+  min-height: 100vh;
+}
+
+.glass-panel,
+.metric-card,
+.sidebar {
+  background: rgba(8, 14, 36, 0.88);
+  border: 1px solid var(--panel-border);
+  border-radius: 1.25rem;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+}
+
+.sidebar {
+  backdrop-filter: blur(14px);
+}
+
+.content-area {
+  background: rgba(5, 8, 22, 0.24);
+}
+
+.eyebrow {
+  color: #7f90ff;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.form-control {
+  background-color: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: var(--text-primary);
+}
+
+.form-control:focus {
+  background-color: rgba(255, 255, 255, 0.06);
+  border-color: rgba(127, 144, 255, 0.7);
+  box-shadow: 0 0 0 0.2rem var(--accent-soft);
+  color: var(--text-primary);
+}
+
+.nav-link {
+  border-radius: 0.9rem;
+  color: var(--text-secondary);
+  padding: 0.85rem 1rem;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  background: var(--accent-soft);
+  color: var(--text-primary);
+}
+
+.metric-card {
+  height: 100%;
+  padding: 1.5rem;
+}
+
+.metric-label {
+  display: block;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  margin-bottom: 0.65rem;
+}
+
+.metric-value {
+  font-size: 1.35rem;
+}
+
+.small-value {
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(25, 135, 84, 0.18);
+  border: 1px solid rgba(25, 135, 84, 0.35);
+  border-radius: 999px;
+  color: #8ce0b7;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 0.7rem 1rem;
+}
+
+.list-group-item {
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+}
+
+.text-secondary {
+  color: var(--text-secondary) !important;
+}
+
+@media (max-width: 991.98px) {
+  .sidebar {
+    margin-bottom: 1.5rem;
+  }
+}
