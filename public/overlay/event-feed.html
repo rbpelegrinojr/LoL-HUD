@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Event Feed Overlay</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 480px;
+        height: 1080px;
+        background: transparent;
+        font-family: 'Segoe UI', Arial, sans-serif;
+        overflow: hidden;
+      }
+
+      #event-feed {
+        position: absolute;
+        top: 200px;
+        right: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+      }
+
+      .event-item {
+        background: rgba(5, 8, 22, 0.82);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-left: 4px solid #5c7cfa;
+        border-radius: 8px;
+        padding: 8px 14px;
+        color: #f8f9ff;
+        font-size: 14px;
+        animation: fade-in 0.3s ease-out;
+      }
+
+      .event-item.kill {
+        border-left-color: #ff5c5c;
+      }
+
+      .event-item.objective {
+        border-left-color: #f6c945;
+      }
+
+      @keyframes fade-in {
+        from {
+          opacity: 0;
+          transform: translateX(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="event-feed"></div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/overlay-event-feed.js"></script>
+  </body>
+</html>

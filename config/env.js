@@ -18,5 +18,13 @@ module.exports = {
   database: {
     path: process.env.DB_PATH || path.join(__dirname, '..', 'data', 'lol_hud.db'),
     syncOnStartup: parseBoolean(process.env.DB_SYNC_ON_STARTUP, true)
+  },
+  session: {
+    secret: process.env.SESSION_SECRET || 'dev-only-insecure-secret-change-me',
+    bcryptRounds: Number.parseInt(process.env.BCRYPT_ROUNDS || '12', 10)
+  },
+  defaultAdmin: {
+    username: process.env.DEFAULT_ADMIN_USER || 'admin',
+    password: process.env.DEFAULT_ADMIN_PASSWORD || 'changeme123'
   }
 };

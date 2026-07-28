@@ -3,9 +3,12 @@ const fs = require('node:fs');
 const { Sequelize } = require('sequelize');
 const env = require('../config/env');
 const { initializeModels } = require('../models');
+const { seedDatabase } = require('./seed');
 
 const dbDir = path.dirname(env.database.path);
-fs.mkdirSync(dbDir, { recursive: true });
+if (env.database.path !== ':memory:') {
+  fs.mkdirSync(dbDir, { recursive: true });
+}
 
 const sequelize = new Sequelize({
   dialect: 'sqlite',
@@ -13,7 +16,7 @@ const sequelize = new Sequelize({
   logging: false
 });
 
-initializeModels(sequelize);
+const models = initializeModels(sequelize);
 
 async function initializeDatabase() {
   try {
@@ -21,6 +24,7 @@ async function initializeDatabase() {
 
     if (env.database.syncOnStartup) {
       await sequelize.sync({ alter: false });
+      await seedDatabase(models);
     }
 
     return {
@@ -40,5 +44,6 @@ async function initializeDatabase() {
 
 module.exports = {
   sequelize,
+  models,
   initializeDatabase
 };

@@ -1,7 +1,13 @@
 const loginForm = document.getElementById('login-form');
+const loginError = document.getElementById('login-error');
+
+function showError(message) {
+  loginError.textContent = message;
+  loginError.classList.remove('d-none');
+}
 
 if (loginForm) {
-  loginForm.addEventListener('submit', (event) => {
+  loginForm.addEventListener('submit', async (event) => {
     event.preventDefault();
 
     if (!loginForm.checkValidity()) {
@@ -9,6 +15,35 @@ if (loginForm) {
       return;
     }
 
-    window.location.assign('/admin/dashboard');
+    loginError.classList.add('d-none');
+
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    const csrfMeta = document.querySelector('meta[name="csrf-token"]');
+    const csrfToken = csrfMeta ? csrfMeta.getAttribute('content') : '';
+
+    try {
+      const response = await fetch('/admin/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-csrf-token': csrfToken
+        },
+        credentials: 'same-origin',
+        body: JSON.stringify({ username, password })
+      });
+
+      if (response.ok) {
+        const data = await response.json().catch(() => ({}));
+        window.location.assign(data.redirect || '/admin/dashboard');
+        return;
+      }
+
+      const data = await response.json().catch(() => ({}));
+      showError(data.message || 'Invalid credentials');
+    } catch (error) {
+      showError('Unable to reach the server. Please try again.');
+    }
   });
 }

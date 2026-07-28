@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Broadcast | League of Legends Tournament HUD</title>
+    <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/admin.css" />
+  </head>
+  <body class="admin-shell">
+    <div class="container-fluid">
+      <div class="row min-vh-100">
+        <aside class="col-12 col-lg-3 col-xxl-2 sidebar p-4">
+          <div>
+            <span class="eyebrow">League of Legends Tournament HUD</span>
+            <h1 class="h3 mt-2 mb-4">Admin Dashboard</h1>
+          </div>
+          <nav class="nav flex-column gap-2">
+            <a class="nav-link" href="/admin/dashboard">Overview</a>
+            <a class="nav-link" href="/admin/tournaments">Tournaments</a>
+            <a class="nav-link" href="/admin/teams">Teams</a>
+            <a class="nav-link" href="/admin/players">Players</a>
+            <a class="nav-link" href="/admin/matches">Matches</a>
+            <a class="nav-link active" href="/admin/broadcast">Broadcast</a>
+            <a class="nav-link" href="/admin/logout">Logout</a>
+          </nav>
+        </aside>
+        <main class="col-12 col-lg-9 col-xxl-10 p-4 p-lg-5 content-area">
+          <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+            <div>
+              <span class="eyebrow">Live Control</span>
+              <h2 class="mb-1">Broadcast Control</h2>
+              <p class="text-secondary mb-0">Drive the live HUD overlays for OBS browser sources.</p>
+            </div>
+            <span class="status-pill" id="game-status">Idle</span>
+          </div>
+
+          <div class="row g-4">
+            <div class="col-12 col-xl-5">
+              <article class="glass-panel p-4">
+                <h3 class="h5 mb-3">Start Game</h3>
+                <div class="mb-3">
+                  <label class="form-label" for="match_id">Match</label>
+                  <select class="form-select" id="match_id"></select>
+                </div>
+                <div class="row">
+                  <div class="col-6 mb-3">
+                    <label class="form-label" for="blue_team_id">Blue Side</label>
+                    <select class="form-select" id="blue_team_id"></select>
+                  </div>
+                  <div class="col-6 mb-3">
+                    <label class="form-label" for="red_team_id">Red Side</label>
+                    <select class="form-select" id="red_team_id"></select>
+                  </div>
+                </div>
+                <button class="btn btn-success w-100" type="button" id="start-game-btn">Start Game</button>
+              </article>
+            </div>
+            <div class="col-12 col-xl-7">
+              <article class="glass-panel p-4">
+                <h3 class="h5 mb-3">Live Stats</h3>
+                <form id="update-form" class="row g-3">
+                  <div class="col-6">
+                    <label class="form-label" for="blueKills">Blue Kills</label>
+                    <input class="form-control" id="blueKills" type="number" min="0" value="0" />
+                  </div>
+                  <div class="col-6">
+                    <label class="form-label" for="redKills">Red Kills</label>
+                    <input class="form-control" id="redKills" type="number" min="0" value="0" />
+                  </div>
+                  <div class="col-6">
+                    <label class="form-label" for="blueGold">Blue Gold</label>
+                    <input class="form-control" id="blueGold" type="number" min="0" value="0" />
+                  </div>
+                  <div class="col-6">
+                    <label class="form-label" for="redGold">Red Gold</label>
+                    <input class="form-control" id="redGold" type="number" min="0" value="0" />
+                  </div>
+                  <div class="col-6">
+                    <label class="form-label" for="blueTowers">Blue Towers</label>
+                    <input class="form-control" id="blueTowers" type="number" min="0" value="0" />
+                  </div>
+                  <div class="col-6">
+                    <label class="form-label" for="redTowers">Red Towers</label>
+                    <input class="form-control" id="redTowers" type="number" min="0" value="0" />
+                  </div>
+                  <div class="col-12">
+                    <button class="btn btn-primary w-100" type="submit">Push Update</button>
+                  </div>
+                </form>
+              </article>
+              <article class="glass-panel p-4 mt-4">
+                <h3 class="h5 mb-3">End Game</h3>
+                <div class="mb-3">
+                  <label class="form-label" for="winner_team_id">Winner</label>
+                  <select class="form-select" id="winner_team_id"></select>
+                </div>
+                <button class="btn btn-danger w-100" type="button" id="end-game-btn">End Game</button>
+              </article>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/apiClient.js"></script>
+    <script src="/js/broadcast.js"></script>
+  </body>
+</html>

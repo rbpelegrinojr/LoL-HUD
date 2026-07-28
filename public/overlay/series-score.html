@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Series Score Overlay</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 1920px;
+        height: 1080px;
+        background: transparent;
+        font-family: 'Segoe UI', Arial, sans-serif;
+        overflow: hidden;
+      }
+
+      #series {
+        position: absolute;
+        top: 110px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        background: rgba(5, 8, 22, 0.7);
+        border-radius: 999px;
+        padding: 8px 20px;
+      }
+
+      .pips {
+        display: flex;
+        gap: 6px;
+      }
+
+      .pip {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        border: 2px solid rgba(255, 255, 255, 0.35);
+        background: transparent;
+      }
+
+      .pip.blue-win {
+        background: #5c9bff;
+        border-color: #5c9bff;
+      }
+
+      .pip.red-win {
+        background: #ff5c5c;
+        border-color: #ff5c5c;
+      }
+
+      #label {
+        color: #f8f9ff;
+        font-weight: 700;
+        font-size: 14px;
+        letter-spacing: 0.08em;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="series">
+      <div class="pips" id="blue-pips"></div>
+      <span id="label">BO3</span>
+      <div class="pips" id="red-pips"></div>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/overlay-series-score.js"></script>
+  </body>
+</html>
